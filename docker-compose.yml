@@ -59,8 +59,8 @@ services:
         - healthcare
     ports:
         - "4000:${NODE_PORT}"
-    extra_hosts:
-        - "mongoservice:172.17.0.1"
+    # extra_hosts:
+    #     - "mongoservice:172.17.0.1"
   flask:
     build:
         context: .

@@ -11,4 +11,4 @@ sudo docker rm $(sudo docker ps -a -q)
 # sudo docker run -p 4000:4000 nodejs
 # sudo docker run -p 6500:6500 flask
 sudo docker compose build
-sudo docker compose up
+sudo docker compose up -d
