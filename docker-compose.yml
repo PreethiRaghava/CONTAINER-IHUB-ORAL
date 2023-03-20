@@ -41,7 +41,7 @@ services:
     networks:
         - healthcare
     ports:
-        - "7171:${REACT_PORT}"
+        - "${REACT_PORT}:${REACT_PORT}"
   nodejs:
     build:
         context: .
@@ -51,8 +51,8 @@ services:
         NODE_PORT : ${NODE_PORT}
         MONDODB_ATLAS_URI_DEPLOY : ${MONGODB_URL}
         MONDODB_ATLAS_URI_DEV : ${MONGODB_URL}
-        APP_URL_DEPLOY: "http://${HOST_IP}:${REACT_PORT}"
-        APP_URL_DEV: "http://${HOST_IP}:${REACT_PORT}"
+        APP_URL_DEPLOY: ${CORS_HOST}
+        APP_URL_DEV: ${CORS_HOST}
         PORT_DEV: ${NODE_PORT}
         PORT_DEPLOY: ${NODE_PORT}
     networks:
