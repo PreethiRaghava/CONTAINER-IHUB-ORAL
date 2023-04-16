@@ -1,74 +1,59 @@
 services:
-#   minio:
-#     build:
-#         context: .
-#         dockerfile: minio.dockerfile
-#     environment:
-#         MINIO_ROOT_USER: "${MINIO_USERNAME}"
-#         MINIO_ROOT_PASSWORD: "${MINIO_PASSWORD}"
-#         MINIO_PORT: "${MINIO_PORT}"
-#         MINIO_CONSOLE_PORT: "${MINIO_CONSOLE_PORT}"
-#     networks:
-#         - healthcare
-#     ports:
-#         - "9000:${MINIO_PORT}"
-#         - "9001:${MINIO_CONSOLE_PORT}"
-#   mongodb:
-#     build:
-#         context: .
-#         dockerfile: mongodb.dockerfile
-#     networks:
-#         - healthcare
-#     ports:
-#         - "27017:${MONGODB_PORT}"
-  reactjs:
-    build:
-        context: .
-        dockerfile: reactjs.dockerfile
-    environment:
-        MINIO_IP: ${MINIO_IP}
-        MINIO_PORT: ${MINIO_PORT}
-        MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
-        MINIO_ACCESS_SECRET: ${MINIO_ACCESS_SECRET}
-        HOST_IP: ${HOST_IP}
-        HOST_PORT: ${REACT_PORT}
-        FLASK_IP: ${FLASK_IP}
-        FLASK_PORT: ${FLASK_PORT}
-        NODE_IP : ${NODE_IP}
-        NODE_PORT : ${NODE_PORT}
-        REACT_IP: ${REACT_IP}
-        REACT_PORT: ${REACT_PORT}
-    networks:
-        - healthcare
-    ports:
-        - "${REACT_PORT}:${REACT_PORT}"
-  nodejs:
-    build:
-        context: .
-        dockerfile: nodejs.dockerfile
-    environment:
-        NODE_IP : ${NODE_IP}
-        NODE_PORT : ${NODE_PORT}
-        MONDODB_ATLAS_URI_DEPLOY : ${MONGODB_URL}
-        MONDODB_ATLAS_URI_DEV : ${MONGODB_URL}
-        APP_URL_DEPLOY: ${CORS_HOST}
-        APP_URL_DEV: ${CORS_HOST}
-        PORT_DEV: ${NODE_PORT}
-        PORT_DEPLOY: ${NODE_PORT}
-    networks:
-        - healthcare
-    ports:
-        - "4000:${NODE_PORT}"
-    # extra_hosts:
-    #     - "mongoservice:172.17.0.1"
-  flask:
-    build:
-        context: .
-        dockerfile: flask.dockerfile
-    networks:
-        - healthcare
-    ports:
-        - "6500:${FLASK_PORT}"
+    reactjs:
+        build:
+            context: .
+            dockerfile: reactjs.dockerfile
+        environment:
+            REACT_APP_DEV: ${DEV}
+            REACT_APP_URL_PREFIX_DEV: ${REACT_APP_URL_PREFIX_DEV}
+            REACT_APP_URL_PREFIX_PROD: ${REACT_APP_URL_PREFIX_PROD}
+            REACT_APP_PROXY_DEV: ${REACT_APP_PROXY_DEV}
+            REACT_APP_PROXY_DEPLOY: ${REACT_APP_PROXY_DEPLOY}
+            REACT_APP_FLASK_URL_DEV: ${REACT_APP_FLASK_URL_DEV}
+            REACT_APP_FLASK_URL_PROD: ${REACT_APP_FLASK_URL_PROD}
+            PORT: ${REACT_PORT}
+        networks:
+            - healthcare
+        ports:
+            - "${REACT_PORT}:${REACT_PORT}"
+    nodejs:
+        build:
+            context: .
+            dockerfile: nodejs.dockerfile
+        environment:
+            DEV: ${DEV}
+            APP_URL_DEV: ${CORS_HOST}
+            APP_URL_PROD: ${CORS_HOST}
+            MONDODB_URL_DEV: ${MONGODB_URL_DEV}
+            MONDODB_URL_PROD: ${MONGODB_URL_PROD}
+            NODE_PORT_DEV: ${NODE_PORT_DEV}
+            NODE_PORT_PROD: ${NODE_PORT_PROD}
+        networks:
+            - healthcare
+        ports:
+            - "4000:${NODE_PORT}"
+    flask:
+        environment:
+            DEV: ${DEV}
+            MINIO_ACCESS_KEY_DEV: ${MINIO_ACCESS_KEY_DEV}
+            MINIO_ACCESS_SECRET_DEV: ${MINIO_ACCESS_SECRET_DEV}
+            MINIO_ACCESS_KEY_PROD: ${MINIO_ACCESS_KEY_PROD}
+            MINIO_ACCESS_SECRET_PROD: ${MINIO_ACCESS_SECRET_PROD}
+            BUCKET_NAME_DEV: ${BUCKET_NAME_DEV}
+            BUCKET_NAME_PROD: ${BUCKET_NAME_PROD}
+            MINIO_BASE_URL_DEV: ${MINIO_BASE_URL_DEV}
+            MINIO_BASE_URL_PROD: ${MINIO_BASE_URL_PROD}
+            PORT_DEV: ${FLASK_PORT_DEV}
+            PORT_PROD: ${FLASK_PORT_PROD}
+            MINIO_CONNECTION_URL_DEV: ${MINIO_CONNECTION_URL_DEV}
+            MINIO_CONNECTION_URL_PROD: ${MINIO_CONNECTION_URL_PROD}
+        build:
+            context: .
+            dockerfile: flask.dockerfile
+        networks:
+            - healthcare
+        ports:
+            - "6500:${FLASK_PORT}"
 
 networks:
-  healthcare:
+    healthcare:
