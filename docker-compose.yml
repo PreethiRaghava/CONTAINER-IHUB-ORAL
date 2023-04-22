@@ -1,9 +1,11 @@
 services:
     reactjs:
+        container_name: ${REACT_CONTAINER_NAME}
         build:
             context: .
             dockerfile: reactjs.dockerfile
         environment:
+            PUBLIC_URL: "${CORS_HOST}${REACT_APP_URL_PREFIX}"
             REACT_APP_URL_PREFIX: ${REACT_APP_URL_PREFIX}
             REACT_APP_PROXY: ${REACT_APP_PROXY}
             REACT_APP_FLASK_URL: ${REACT_APP_FLASK_URL}
@@ -13,6 +15,7 @@ services:
         ports:
             - "${REACT_PORT}:${REACT_PORT}"
     nodejs:
+        container_name: ${NODE_CONTAINER_NAME}
         build:
             context: .
             dockerfile: nodejs.dockerfile
@@ -25,6 +28,10 @@ services:
         ports:
             - "4000:${NODE_PORT}"
     flask:
+        container_name: ${FLASK_CONTAINER_NAME}
+        build:
+            context: .
+            dockerfile: flask.dockerfile
         environment:
             MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
             MINIO_ACCESS_SECRET: ${MINIO_ACCESS_SECRET}
@@ -32,9 +39,6 @@ services:
             MINIO_BASE_URL: ${MINIO_BASE_URL}
             PORT: ${FLASK_PORT}
             MINIO_CONNECTION_URL: ${MINIO_CONNECTION_URL}
-        build:
-            context: .
-            dockerfile: flask.dockerfile
         networks:
             - healthcare
         ports:
