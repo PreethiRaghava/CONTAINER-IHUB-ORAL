@@ -13,8 +13,7 @@ REACT_APP_FLASK_URL="https://healthcare-data.iiit.ac.in/inference"
 #################
 
 CORS_HOST="https://healthcare-data.iiit.ac.in/"
-MONGODB_IP=10.8.0.7
-MONGODB_PORT=27017
+
 MONGODB_URL="mongodb://${MONGODB_IP}:${MONGODB_PORT}/tih"
 
 NODE_PORT=4000

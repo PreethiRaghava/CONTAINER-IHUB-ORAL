@@ -12,5 +12,5 @@ sudo docker rm ihub-oral-container-flask-1 ihub-oral-container-reactjs-1 ihub-or
 # sudo docker run -d -p 9001:9001 minio
 # sudo docker run -p 4000:4000 nodejs
 # sudo docker run -p 6500:6500 flask
-sudo docker compose --env-file .env build
-sudo docker compose --env-file .env up -d
+sudo docker compose --env-file .dev build
+sudo docker compose --env-file .dev up -d
