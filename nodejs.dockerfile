@@ -4,5 +4,5 @@ WORKDIR /app
 COPY repos/IHUB-ORAL-backend/ .
 # RUN npm install
 RUN npm run
-EXPOSE 4000
+EXPOSE ${NODE_PORT}
 CMD [ "npm", "start" ]

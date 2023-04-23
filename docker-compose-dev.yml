@@ -1,5 +1,5 @@
 services:
-    reactjs:
+    devreactjs:
         container_name: ${REACT_CONTAINER_NAME}
         build:
             context: .
@@ -14,7 +14,7 @@ services:
             - healthcare
         ports:
             - "${REACT_PORT}:${REACT_PORT}"
-    nodejs:
+    devnodejs:
         container_name: ${NODE_CONTAINER_NAME}
         build:
             context: .
@@ -23,11 +23,12 @@ services:
             APP_URL: ${CORS_HOST}
             MONGODB_URL: ${MONGODB_URL}
             NODE_PORT: ${NODE_PORT}
+            NODE_PREFIX: ${NODE_PREFIX}
         networks:
             - healthcare
         ports:
-            - "4000:${NODE_PORT}"
-    flask:
+            - "${NODE_PORT}:${NODE_PORT}"
+    devflask:
         container_name: ${FLASK_CONTAINER_NAME}
         build:
             context: .
@@ -39,10 +40,13 @@ services:
             MINIO_BASE_URL: ${MINIO_BASE_URL}
             PORT: ${FLASK_PORT}
             MINIO_CONNECTION_URL: ${MINIO_CONNECTION_URL}
+            FLASK_PREFIX: ${FLASK_PREFIX}
         networks:
             - healthcare
         ports:
-            - "6500:${FLASK_PORT}"
+            - "${FLASK_PORT}:${FLASK_PORT}"
 
 networks:
     healthcare:
+
+
