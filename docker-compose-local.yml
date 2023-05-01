@@ -1,0 +1,52 @@
+services:
+    localreactjs:
+        container_name: ${REACT_CONTAINER_NAME}
+        build:
+            context: .
+            dockerfile: reactjs.dockerfile
+        environment:
+            PUBLIC_URL: "${CORS_HOST}${REACT_APP_URL_PREFIX}"
+            REACT_APP_URL_PREFIX: ${REACT_APP_URL_PREFIX}
+            REACT_APP_PROXY: ${REACT_APP_PROXY}
+            REACT_APP_FLASK_URL: ${REACT_APP_FLASK_URL}
+            PORT: ${REACT_PORT}
+        networks:
+            - healthcare
+        ports:
+            - "${REACT_PORT}:${REACT_PORT}"
+    localnodejs:
+        container_name: ${NODE_CONTAINER_NAME}
+        build:
+            context: .
+            dockerfile: nodejs.dockerfile
+        environment:
+            APP_URL: ${CORS_HOST}
+            MONGODB_URL: ${MONGODB_URL}
+            NODE_PORT: ${NODE_PORT}
+            NODE_PREFIX: ${NODE_PREFIX}
+        networks:
+            - healthcare
+        ports:
+            - "${NODE_PORT}:${NODE_PORT}"
+    localflask:
+        container_name: ${FLASK_CONTAINER_NAME}
+        build:
+            context: .
+            dockerfile: flask.dockerfile
+        environment:
+            MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
+            MINIO_ACCESS_SECRET: ${MINIO_ACCESS_SECRET}
+            BUCKET_NAME: ${BUCKET_NAME}
+            MINIO_BASE_URL: ${MINIO_BASE_URL}
+            PORT: ${FLASK_PORT}
+            MINIO_CONNECTION_URL: ${MINIO_CONNECTION_URL}
+            FLASK_PREFIX: ${FLASK_PREFIX}
+        networks:
+            - healthcare
+        ports:
+            - "${FLASK_PORT}:${FLASK_PORT}"
+
+networks:
+    healthcare:
+
+
