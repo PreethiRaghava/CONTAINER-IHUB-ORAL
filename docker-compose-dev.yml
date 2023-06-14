@@ -41,6 +41,8 @@ services:
             PORT: ${FLASK_PORT}
             MINIO_CONNECTION_URL: ${MINIO_CONNECTION_URL}
             FLASK_PREFIX: ${FLASK_PREFIX}
+            MONGO_URL: ${FLASK_MONGO_URL}
+            MONGO_DB_NAME: ${FLASK_MONGO_DB_NAME}
         networks:
             - healthcare
         ports:
